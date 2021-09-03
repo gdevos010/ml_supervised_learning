@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # ML7641 Supervised Learning documentation build configuration file, created by
 # sphinx-quickstart.
@@ -10,20 +9,15 @@
 #
 # All configuration values have a default; values that are commented out
 # serve to show the default.
-
 # import os
 # import sys
-
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 # sys.path.insert(0, os.path.abspath('.'))
-
 # -- General configuration -----------------------------------------------------
-
 # If your documentation needs a minimal Sphinx version, state it here.
 # needs_sphinx = '1.0'
-
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = []
@@ -41,7 +35,7 @@ source_suffix = ".rst"
 master_doc = "index"
 
 # General information about the project.
-project = u"ML7641 Supervised Learning"
+project = "ML7641 Supervised Learning"
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -184,8 +178,8 @@ latex_documents = [
     (
         "index",
         "ml_supervised_learning.tex",
-        u"ML7641 Supervised Learning Documentation",
-        u"Greg DeVos",
+        "ML7641 Supervised Learning Documentation",
+        "Greg DeVos",
         "manual",
     )
 ]
@@ -219,8 +213,8 @@ man_pages = [
     (
         "index",
         "ml_supervised_learning",
-        u"ML7641 Supervised Learning Documentation",
-        [u"Greg DeVos"],
+        "ML7641 Supervised Learning Documentation",
+        ["Greg DeVos"],
         1,
     )
 ]
@@ -238,8 +232,8 @@ texinfo_documents = [
     (
         "index",
         "ml_supervised_learning",
-        u"ML7641 Supervised Learning Documentation",
-        u"Greg DeVos",
+        "ML7641 Supervised Learning Documentation",
+        "Greg DeVos",
         "ML7641 Supervised Learning",
         "Paper 1 for ML7641 at GT. Comparing 5 supervised algorithms on medical datasets",
         "Miscellaneous",
