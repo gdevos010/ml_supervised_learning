@@ -3,6 +3,19 @@ ML7641 Supervised Learning
 
 Paper 1 for ML7641 at GT. Comparing 5 supervised algorithms on medical datasets
 
+
+TODO
+------
+- cross validation
+- why is the values/features in the dataset interesting
+- graph with the relationship between training size and test size 0-100%
+- for nn epoch graph, loss curve
+- hyper parameter values (grid search)
+- the validation and complexity curve (2 for each algorithm)
+  - high bais low variance or low bais high variance
+- justification of performance metric
+- training time
+
 Project Organization
 ------------
 
