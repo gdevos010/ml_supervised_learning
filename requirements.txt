@@ -5,6 +5,7 @@ awscli
 # external requirements
 click
 coverage
+feather-format
 flake8
 matplotlib
 numpy
@@ -12,4 +13,5 @@ pandas
 pre-commit
 python-dotenv>=0.5.1
 scikit-learn
+scipy
 Sphinx
