@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from scipy.io import arff
 
 from src.utils.logger import info
-from src.utils.logger import initLogger
+from src.utils.logger import init_logger
 
 
 @click.command()
@@ -57,7 +57,7 @@ def main(name):
 
 
 if __name__ == "__main__":
-    initLogger()
+    init_logger()
 
     # find .env automagically by walking up directories until it's found, then
     # load up the .env entries as environment variables
