@@ -1,25 +1,10 @@
-from models.boosting import Boosting
-from models.dtree import DecisionTree
-from models.knn import KNN
-from models.nn import MLP
-from models.svm import SVM
+from src import fast_run
+from src import model_list
 from src.data.dataset import Dataset
 from src.data.dataset import get_datasets
 from src.utils.logger import info
 from src.utils.logger import init_logger
-
-
-fast_run = False
-info(f"fast_run {fast_run}")
-
-model_list = [
-    DecisionTree("Decision Trees", fast_run),
-    MLP("Neural Network", fast_run),
-    Boosting("k nearest neighbors", fast_run),
-    SVM("Linear Support Vector Machines", "linear", fast_run),
-    SVM("RBF Support Vector Machines", "rbf", fast_run),
-    KNN("k-Nearest Neighbors", fast_run),
-]
+from src.visualization.visualize import validation_curve
 
 
 def train():
@@ -41,7 +26,13 @@ def train():
                 model.tune(dataset)
 
 
+def gen_plots():
+    validation_curve()
+    pass
+
+
 if __name__ == '__main__':
     init_logger()
 
-    train()
+    # train()
+    gen_plots()

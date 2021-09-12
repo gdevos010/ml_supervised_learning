@@ -11,7 +11,15 @@ class KNN(Model):
 
     def __init__(self, title, fast):
         super().__init__(title, KNeighborsClassifier, fast)
-        self.hyper_param_dist = dict(n_neighbors=list(range(1, 15, 2)))
+
+        # used for RandomizedSearchCV tuning
+        self.hyper_param_distribution = dict(n_neighbors=list(range(1, 15, 2)))
+
+        # used for validation curve visualization
+        self.validation_curve_param1 = 'n_neighbors'
+        self.param1_range = range(1, 15, 2)
+        # self.validation_curve_param2 = 'n_neighbors'
+        # self.param2_range = range(1, 15, 2)
 
         # set default
         self.model = self.model(3, n_jobs=-1)

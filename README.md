@@ -1,7 +1,7 @@
-ML7641 Supervised Learning
+Supervised Learning
 ==============================
 
-Paper 1 for ML7641 at GT. Comparing 5 supervised algorithms on medical datasets
+Comparing 5 supervised algorithms on two medical datasets
 
 
 TODO
@@ -14,7 +14,7 @@ TODO
 - the validation and complexity curve (2 for each algorithm)
   - high bais low variance or low bais high variance
 - justification of performance metric
-- training time
+- move model code to src dir
 
 Project Organization
 ------------

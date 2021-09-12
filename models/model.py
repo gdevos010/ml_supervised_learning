@@ -13,7 +13,7 @@ class Model:
     def __init__(self, title, model, fast):
         self.title = title
         self.model = model
-        self.hyper_param_dist = None
+        self.hyper_param_distribution = None
         self.fast = fast
 
         self.n_iter_search = 20
@@ -27,7 +27,7 @@ class Model:
         return self.title < other.title
 
     def fit(self, dataset: Dataset):
-        info(f"fitting classifier {self.title}")
+        info(f"\tfitting classifier {self.title}")
 
         start = timeit.default_timer()
 
@@ -70,8 +70,8 @@ class Model:
         """
         load model from models/zoo
         """
-        project_dir = Path(__file__).resolve().parents[2]
-        filepath = Path.joinpath(project_dir, "models", "zoo", dataset_name + ".pkl")
+        project_dir = Path(__file__).resolve().parents[1]
+        filepath = Path.joinpath(project_dir, "models", "zoo", dataset_name,  self.title + ".pkl")
         self.model = pickle.load(open(filepath, 'rb'))
 
     def tune(self, dataset: Dataset, verbose=0):
@@ -82,7 +82,7 @@ class Model:
         info(f'tuning: {self.title}')
         start = timeit.default_timer()
 
-        clf = RandomizedSearchCV(self.model, self.hyper_param_dist, random_state=0,
+        clf = RandomizedSearchCV(self.model, self.hyper_param_distribution, random_state=0,
                                  n_iter=self.n_iter_search, n_jobs=12, verbose=verbose)
         search = clf.fit(dataset.x_train, dataset.y_train)
 

@@ -11,7 +11,15 @@ class DecisionTree(Model):
 
     def __init__(self, name, fast):
         super().__init__(name, DecisionTreeClassifier, fast)
-        self.hyper_param_dist = dict(max_depth=list(range(3, 21)))
+
+        # used for RandomizedSearchCV tuning
+        self.hyper_param_distribution = dict(max_depth=list(range(3, 25)))
+
+        # used for validation curve visualization
+        self.validation_curve_param1 = 'max_depth'
+        self.param1_range = range(3, 25)
+        # self.validation_curve_param2 = 'max_depth'
+        # self.param2_range = range(3, 25)
 
         # set default
         self.model = self.model(max_depth=5)

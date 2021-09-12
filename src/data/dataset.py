@@ -1,6 +1,7 @@
 from os import walk
 from pathlib import Path
 
+import numpy as np
 import pyarrow.feather as feather
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
@@ -21,12 +22,17 @@ class Dataset:
     def __init__(self, filename: str):
         self.name = filename[:-8]
         self.filename = filename
+        self.x = None
+        self.y = None
         self.x_train = None
         self.x_test = None
         self.y_train = None
         self.y_test = None
 
-    def load_dataset(self, fast=False):
+    def __str__(self):
+        return self.name
+
+    def load_dataset(self, fast=False, test_size=0.3):
         """
         load dataset from file
         """
@@ -38,13 +44,22 @@ class Dataset:
         x = df.iloc[:, : -1]
         y = df.iloc[:, -1]
 
-        x = StandardScaler().fit_transform(x)
+        self.split_dataset(x, y, test_size)
 
-        self.split_dataset(x, y)
+        # preprocess dataset.
+        # Fit standard scaler on training set and transform test set
+        standard_scaler = StandardScaler()
+        self.x_train = standard_scaler.fit_transform(self.x_train)
+        self.x_test = standard_scaler.transform(self.x_test)
+
+        # some plots require just an x and y
+        self.x = np.vstack((self.x_train, self.x_test))
+        self.y = np.concatenate((self.y_train, self.y_test))
 
     def split_dataset(self, x, y, test_size=0.30, random_state=42):
-        x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=test_size, random_state=random_state)
-        self.x_train = x_train
-        self.x_test = x_test
-        self.y_train = y_train
-        self.y_test = y_test
+        self.x_train, self.x_test, self.y_train, self.y_test = train_test_split(x,
+                                                                                y,
+                                                                                test_size=test_size,
+                                                                                random_state=random_state)
+        self.y_train = self.y_train.to_numpy()
+        self.y_test = self.y_test.to_numpy()
