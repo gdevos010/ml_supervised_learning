@@ -18,7 +18,7 @@ class Boosting(Model):
 
         # used for validation curve visualization
         self.validation_curve_param1 = 'n_estimators'
-        self.param1_range = range(10, 500, 10)
+        self.param1_range = range(25, 500, 25)
         # self.validation_curve_param2 = 'n_estimators'
         # self.param2_range = range(10, 200, 10)
 

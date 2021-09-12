@@ -57,6 +57,9 @@ class Dataset:
         self.y = np.concatenate((self.y_train, self.y_test))
 
     def split_dataset(self, x, y, test_size=0.30, random_state=42):
+        """
+        https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html?highlight=train_test_split#sklearn.model_selection.train_test_split
+        """
         self.x_train, self.x_test, self.y_train, self.y_test = train_test_split(x,
                                                                                 y,
                                                                                 test_size=test_size,

@@ -1,3 +1,4 @@
+import numpy as np
 from sklearn.neural_network import MLPClassifier
 
 from models.model import Model
@@ -22,7 +23,7 @@ class MLP(Model):
 
         # used for validation curve visualization
         self.validation_curve_param1 = 'learning_rate_init'
-        self.param1_range = [0.1, 0.05, 0.01, 0.005, 0.001]
+        self.param1_range = np.linspace(0.001, 0.1, 10)
         # self.validation_curve_param2 = 'max_depth'
         # self.param2_range = range(3, 25)
 

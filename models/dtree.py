@@ -1,3 +1,4 @@
+import numpy as np
 from sklearn.tree import DecisionTreeClassifier
 
 from models.model import Model
@@ -13,7 +14,8 @@ class DecisionTree(Model):
         super().__init__(name, DecisionTreeClassifier, fast)
 
         # used for RandomizedSearchCV tuning
-        self.hyper_param_distribution = dict(max_depth=list(range(3, 25)))
+        self.hyper_param_distribution = dict(max_depth=np.arange(3, 25),
+                                             min_samples_leaf=np.logspace(-4, -1, 10).tolist() + [1])
 
         # used for validation curve visualization
         self.validation_curve_param1 = 'max_depth'
@@ -22,4 +24,4 @@ class DecisionTree(Model):
         # self.param2_range = range(3, 25)
 
         # set default
-        self.model = self.model(max_depth=5)
+        self.model = self.model(max_depth=5, criterion='gini')

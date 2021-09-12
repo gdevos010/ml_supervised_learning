@@ -1,3 +1,5 @@
+from sklearn.model_selection import StratifiedShuffleSplit
+
 from models.ada import Boosting
 from models.dtree import DecisionTree
 from models.knn import KNN
@@ -18,3 +20,6 @@ model_list = [
     SVM("POLY Support Vector Machines", "poly", fast_run),
     KNN("k-Nearest Neighbors", fast_run),
 ]
+
+# https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.StratifiedShuffleSplit.html#sklearn.model_selection.StratifiedShuffleSplit
+cv = StratifiedShuffleSplit(n_splits=10)

@@ -14,9 +14,9 @@ class SVM(Model):
         self.kernel = kernel
 
         # used for RandomizedSearchCV tuning
-        self.hyper_param_distribution = {'C': [.5, 1., 2, 5, 10],
+        self.hyper_param_distribution = {'C': np.linspace(0.1, 10, 20),
                                          'gamma': np.logspace(-6, -1, 12),
-                                         'coef0': [0, .1, .5, 1]}
+                                         'coef0': np.linspace(0., 2., 5)}
 
         # used for validation curve visualization
         self.validation_curve_param1 = 'gamma'

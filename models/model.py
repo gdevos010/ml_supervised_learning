@@ -83,7 +83,7 @@ class Model:
         start = timeit.default_timer()
 
         clf = RandomizedSearchCV(self.model, self.hyper_param_distribution, random_state=0,
-                                 n_iter=self.n_iter_search, n_jobs=12, verbose=verbose)
+                                 n_iter=self.n_iter_search, n_jobs=14, verbose=verbose)
         search = clf.fit(dataset.x_train, dataset.y_train)
 
         stop = timeit.default_timer()
