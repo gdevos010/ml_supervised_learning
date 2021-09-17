@@ -5,7 +5,7 @@ from yellowbrick.model_selection import LearningCurve
 from yellowbrick.model_selection import ValidationCurve
 
 from src import cv
-from src import model_list
+from src import models_from_dataset
 from src.data.dataset import Dataset
 from src.data.dataset import get_datasets
 from src.utils.logger import info
@@ -47,9 +47,10 @@ def validation_curve():
         info(f"dataset: {dataset.name}")
 
         dataset.load_dataset()
+        model_list = models_from_dataset(dataset)
 
-        folderpath = Path.joinpath(project_dir, "reports", "figures", dataset.name)
-        folderpath.mkdir(parents=True, exist_ok=True)
+        output_path = Path.joinpath(project_dir, "reports", "figures", dataset.name)
+        output_path.mkdir(parents=True, exist_ok=True)
 
         # iterate over classifiers
         for model in model_list:
@@ -61,7 +62,7 @@ def validation_curve():
 
             viz.fit(dataset.x, dataset.y)
 
-            filepath = Path.joinpath(folderpath, f"{model.title}.png")
+            filepath = Path.joinpath(output_path, f"{model.title}.png")
             viz.fig.savefig(filepath)
             viz.show()
 
@@ -79,20 +80,21 @@ def learning_curve():
         info(f"dataset: {dataset.name}")
 
         dataset.load_dataset()
+        model_list = models_from_dataset(dataset)
 
-        folderpath = Path.joinpath(project_dir, "reports", "figures", dataset.name)
-        folderpath.mkdir(parents=True, exist_ok=True)
+        output_path = Path.joinpath(project_dir, "reports", "figures", dataset.name)
+        output_path.mkdir(parents=True, exist_ok=True)
 
         # iterate over classifiers
         for model in model_list:
-            # Load a trained model
+            # Load a trained model for dataset
             model.load(dataset.name)
 
             viz = LearningCurve(model.model, cv=cv, scoring=scoring, train_sizes=sizes, n_jobs=14)
 
             viz.fit(dataset.x, dataset.y)
 
-            filepath = Path.joinpath(folderpath, f"{model.title}.png")
+            filepath = Path.joinpath(output_path, f"{model.title}.png")
             viz.fig.savefig(filepath)
             viz.show()
 

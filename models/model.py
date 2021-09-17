@@ -32,6 +32,9 @@ class Model:
         return self.title < other.title
 
     def fit(self, dataset: Dataset):
+        """
+        Fit the default classifier on the dataset
+        """
         info(f"\tfitting classifier {self.title}")
 
         start = timeit.default_timer()
@@ -41,7 +44,10 @@ class Model:
         stop = timeit.default_timer()
         info(f'\t\ttrain time: {round(stop - start, 3)}s')
 
-    def score(self, dataset: Dataset, train, print_time=True):
+    def score(self, dataset: Dataset, train):
+        """
+        calculate the accuracy on the dataset
+        """
         start = timeit.default_timer()
 
         # get the mean accuracy on the dataset
@@ -53,12 +59,11 @@ class Model:
             x = dataset.x_test
             y = dataset.y_test
             mode = 'test'
-        score = self.model.score(x, y)
-        info(f"\t\tclassifier score {round(score, 3)} on {mode} set")
 
+        score = self.model.score(x, y)
         stop = timeit.default_timer()
-        if print_time:
-            info(f'\t\tscore time: {round(stop - start, 3)}s')
+
+        info(f"\t\tclassifier score {round(score, 3)} on {mode} set ({round(stop - start, 3)}s)")
 
     def save(self, dataset_name: str):
         """
@@ -75,6 +80,7 @@ class Model:
         """
         load model from models/zoo
         """
+        info(f"\tloading: {self.title}")
         project_dir = Path(__file__).resolve().parents[1]
         filepath = Path.joinpath(project_dir, "models", "zoo", dataset_name,  self.title + ".pkl")
         self.model = pickle.load(open(filepath, 'rb'))
@@ -92,9 +98,9 @@ class Model:
         search = clf.fit(dataset.x_train, dataset.y_train)
 
         stop = timeit.default_timer()
-        info(f'\t\tsearch time: {round(stop - start,3)}s')
+        info(f'\t\tsearch time: {round(stop - start, 3)}s')
 
-        info(f"\t\tbest score {round(search.best_score_, 3)}")
+        # info(f"\t\tbest score {round(search.best_score_, 3)}")
         info(f"\t\t{search.best_params_}")
 
         # save the best model

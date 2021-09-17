@@ -6,6 +6,9 @@ from src.utils.logger import init_logger
 
 
 def train():
+    """
+    loop over each processed dataset. fit, tune and save the model
+    """
     datasets = get_datasets()
 
     for ds_cnt, filename in enumerate(datasets):
@@ -23,6 +26,9 @@ def train():
 
             if not fast_run:
                 model.tune(dataset)
+
+                model.score(dataset, train=True)
+                model.score(dataset, train=False)
 
 
 if __name__ == '__main__':
