@@ -1,5 +1,6 @@
 import numpy as np
 from sklearn.neural_network import MLPClassifier
+from sklearn.neural_network import MLPRegressor
 
 from models.model import Model
 from src.data.dataset import Dataset
@@ -13,7 +14,11 @@ class MLP(Model):
     """
 
     def __init__(self, title: str, dataset: Dataset, fast: bool):
-        super().__init__(title, MLPClassifier, dataset, fast)
+        # switch between classification and regression based on dataset
+        if dataset.classification:
+            super().__init__(title, MLPClassifier, dataset, fast)
+        else:
+            super().__init__(title, MLPRegressor, dataset, fast)
 
         # used for RandomizedSearchCV tuning
         self.hyper_param_distribution = dict(hidden_layer_sizes=[(10, 10), (25, 25), (50, 50), (100, 100),

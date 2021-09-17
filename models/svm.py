@@ -11,7 +11,13 @@ class SVM(Model):
     https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html#sklearn.svm.SVC
     """
     def __init__(self, title: str, dataset: Dataset, kernel: str, fast: bool):
-        super().__init__(title, SVC, dataset, fast)
+        # switch between classification and regression based on dataset
+        if dataset.classification:
+            super().__init__(title, SVC, dataset, fast)
+        else:
+            # TODO
+            super().__init__(title, SVC, dataset, fast)
+
         self.kernel = kernel
 
         # used for RandomizedSearchCV tuning

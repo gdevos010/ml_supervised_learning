@@ -1,4 +1,5 @@
 from sklearn.ensemble import AdaBoostClassifier
+from sklearn.ensemble import AdaBoostRegressor
 
 from models.model import Model
 from src.data.dataset import Dataset
@@ -11,9 +12,13 @@ class Boosting(Model):
     """
 
     def __init__(self, title: str, dataset: Dataset, fast: bool):
-        super().__init__(title, AdaBoostClassifier, dataset, fast)
+        # switch between classification and regression based on dataset
+        if dataset.classification:
+            super().__init__(title, AdaBoostClassifier, dataset, fast)
+        else:
+            super().__init__(title, AdaBoostRegressor, dataset, fast)
 
-        # used for RandomizedSearchCV tuning
+# used for RandomizedSearchCV tuning
         self.hyper_param_distribution = {'n_estimators': [10, 50, 100, 200],
                                          'learning_rate': [.5, 1, 1.5, 2]}
 

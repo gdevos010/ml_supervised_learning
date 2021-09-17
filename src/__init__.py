@@ -17,7 +17,7 @@ def models_from_dataset(dataset: Dataset):
     model_list = [
         DecisionTree("Decision Trees", dataset, fast_run),
         MLP("Neural Network", dataset, fast_run),
-        Boosting("k nearest neighbors", dataset, fast_run),
+        Boosting("Ada Boost", dataset, fast_run),
         SVM("RBF Support Vector Machines", dataset, "rbf", fast_run),
         SVM("POLY Support Vector Machines", dataset, "poly", fast_run),
         KNN("k-Nearest Neighbors", dataset, fast_run),

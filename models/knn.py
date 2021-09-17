@@ -1,4 +1,5 @@
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.neighbors import KNeighborsRegressor
 
 from models.model import Model
 from src.data.dataset import Dataset
@@ -11,9 +12,13 @@ class KNN(Model):
     """
 
     def __init__(self, title: str, dataset: Dataset, fast: bool):
-        super().__init__(title, KNeighborsClassifier, dataset, fast)
+        # switch between classification and regression based on dataset
+        if dataset.classification:
+            super().__init__(title, KNeighborsClassifier, dataset, fast)
+        else:
+            super().__init__(title, KNeighborsRegressor, dataset, fast)
 
-        # used for RandomizedSearchCV tuning
+# used for RandomizedSearchCV tuning
         self.hyper_param_distribution = dict(n_neighbors=list(range(1, 15, 2)))
 
         # used for validation curve visualization

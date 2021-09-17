@@ -1,5 +1,6 @@
 import numpy as np
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.tree import DecisionTreeRegressor
 
 from models.model import Model
 from src.data.dataset import Dataset
@@ -12,7 +13,11 @@ class DecisionTree(Model):
     """
 
     def __init__(self, title: str, dataset: Dataset, fast: bool):
-        super().__init__(title, DecisionTreeClassifier, dataset, fast)
+        # switch between classification and regression based on dataset
+        if dataset.classification:
+            super().__init__(title, DecisionTreeClassifier, dataset, fast)
+        else:
+            super().__init__(title, DecisionTreeRegressor, dataset, fast)
 
         # used for RandomizedSearchCV tuning
         self.hyper_param_distribution = dict(max_depth=np.arange(3, 25),

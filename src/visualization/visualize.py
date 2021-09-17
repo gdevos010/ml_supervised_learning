@@ -99,7 +99,13 @@ def learning_curve():
             viz.show()
 
 
+def visualize_dataset():
+    # TODO
+    pass
+
+
 def gen_plots():
+    visualize_dataset()
     validation_curve()
     learning_curve()
 
