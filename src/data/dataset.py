@@ -6,6 +6,8 @@ import pyarrow.feather as feather
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
+from src.utils.logger import info
+
 
 def get_datasets():
     """
@@ -22,12 +24,19 @@ class Dataset:
     def __init__(self, filename: str):
         self.name = filename[:-8]
         self.filename = filename
+
+        # classification or regression dataset
+        self.classification = True
+
         self.x = None
         self.y = None
         self.x_train = None
         self.x_test = None
         self.y_train = None
         self.y_test = None
+
+        self.class_num = None
+        self.feature_count = None
 
     def __str__(self):
         return self.name
@@ -39,6 +48,8 @@ class Dataset:
         project_dir = Path(__file__).resolve().parents[2]
         processed_data = Path.joinpath(project_dir, "data", "processed", self.filename)
         df = feather.read_feather(processed_data)
+
+        info(f"dataset: {self.name}")
 
         # The last column is the labels for both datasets
         x = df.iloc[:, : -1]
@@ -55,6 +66,16 @@ class Dataset:
         # some plots require just an x and y
         self.x = np.vstack((self.x_train, self.x_test))
         self.y = np.concatenate((self.y_train, self.y_test))
+
+        self.class_num = np.unique(self.y)
+        self.feature_count = self.x.shape[1]
+        if self.class_num.size == 2:
+            info("binary classifier")
+        elif self.class_num.size < 100:
+            info("multi-label classifier")
+        else:
+            info("regression")
+            self.classification = False
 
     def split_dataset(self, x, y, test_size=0.30, random_state=42):
         """

@@ -1,6 +1,7 @@
 from sklearn.ensemble import AdaBoostClassifier
 
 from models.model import Model
+from src.data.dataset import Dataset
 
 
 class Boosting(Model):
@@ -9,8 +10,8 @@ class Boosting(Model):
     https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.AdaBoostClassifier.html#sklearn.ensemble.AdaBoostClassifier
     """
 
-    def __init__(self, title, fast):
-        super().__init__(title, AdaBoostClassifier, fast)
+    def __init__(self, title: str, dataset: Dataset, fast: bool):
+        super().__init__(title, AdaBoostClassifier, dataset, fast)
 
         # used for RandomizedSearchCV tuning
         self.hyper_param_distribution = {'n_estimators': [10, 50, 100, 200],

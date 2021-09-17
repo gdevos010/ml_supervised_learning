@@ -100,3 +100,7 @@ def learning_curve():
 def gen_plots():
     validation_curve()
     learning_curve()
+
+
+# https://stackoverflow.com/questions/46912557/is-it-possible-to-get-test-scores-for-each-iteration-of-mlpclassifier
+# https://stackoverflow.com/questions/52349169/plotting-test-valid-and-train-acc-again-epochs-in-sklearn

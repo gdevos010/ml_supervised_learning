@@ -1,8 +1,7 @@
 from src import fast_run
-from src import model_list
+from src import models_from_dataset
 from src.data.dataset import Dataset
 from src.data.dataset import get_datasets
-from src.utils.logger import info
 from src.utils.logger import init_logger
 
 
@@ -11,10 +10,11 @@ def train():
 
     for ds_cnt, filename in enumerate(datasets):
         dataset = Dataset(filename)
-        info(f"dataset: {dataset.name}")
-        dataset.load_dataset()
 
-        # iterate over classifiers
+        dataset.load_dataset()
+        model_list = models_from_dataset(dataset)
+
+        # iterate over models
         for model in model_list:
             model.fit(dataset)
 

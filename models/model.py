@@ -10,11 +10,16 @@ from src.utils.logger import info
 
 class Model:
 
-    def __init__(self, title, model, fast):
+    def __init__(self, title: str, model, dataset: Dataset, fast: bool):
         self.title = title
         self.model = model
         self.hyper_param_distribution = None
         self.fast = fast
+
+        self.feature_count = dataset.feature_count
+        self.class_num = dataset.class_num
+
+        self.is_pytorch = False
 
         self.n_iter_search = 20
         if self.fast:
@@ -36,7 +41,7 @@ class Model:
         stop = timeit.default_timer()
         info(f'\t\ttrain time: {round(stop - start, 3)}s')
 
-    def score(self, dataset: Dataset, train, print_time=False):
+    def score(self, dataset: Dataset, train, print_time=True):
         start = timeit.default_timer()
 
         # get the mean accuracy on the dataset
@@ -79,7 +84,7 @@ class Model:
         use random search to find best model
         https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RandomizedSearchCV.html
         """
-        info(f'tuning: {self.title}')
+        info(f'\ttuning: {self.title}')
         start = timeit.default_timer()
 
         clf = RandomizedSearchCV(self.model, self.hyper_param_distribution, random_state=0,

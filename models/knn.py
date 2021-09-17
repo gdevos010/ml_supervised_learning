@@ -1,6 +1,7 @@
 from sklearn.neighbors import KNeighborsClassifier
 
 from models.model import Model
+from src.data.dataset import Dataset
 
 
 class KNN(Model):
@@ -9,8 +10,8 @@ class KNN(Model):
     # https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html#sklearn.neighbors.KNeighborsClassifier
     """
 
-    def __init__(self, title, fast):
-        super().__init__(title, KNeighborsClassifier, fast)
+    def __init__(self, title: str, dataset: Dataset, fast: bool):
+        super().__init__(title, KNeighborsClassifier, dataset, fast)
 
         # used for RandomizedSearchCV tuning
         self.hyper_param_distribution = dict(n_neighbors=list(range(1, 15, 2)))

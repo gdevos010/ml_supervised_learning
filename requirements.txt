@@ -8,10 +8,11 @@ coverage
 feather-format
 flake8
 matplotlib
-numpy
+numpy>=1.21.2
 pandas
 pre-commit
 python-dotenv>=0.5.1
+pytorch-tabnet
 scikit-learn
 scipy
 Sphinx

@@ -2,6 +2,7 @@ import numpy as np
 from sklearn.neural_network import MLPClassifier
 
 from models.model import Model
+from src.data.dataset import Dataset
 
 
 class MLP(Model):
@@ -11,8 +12,8 @@ class MLP(Model):
     https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html#sklearn.neural_network.MLPClassifier
     """
 
-    def __init__(self, title, fast):
-        super().__init__(title, MLPClassifier, fast)
+    def __init__(self, title: str, dataset: Dataset, fast: bool):
+        super().__init__(title, MLPClassifier, dataset, fast)
 
         # used for RandomizedSearchCV tuning
         self.hyper_param_distribution = dict(hidden_layer_sizes=[(10, 10), (25, 25), (50, 50), (100, 100),

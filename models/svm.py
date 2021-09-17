@@ -2,6 +2,7 @@ import numpy as np
 from sklearn.svm import SVC
 
 from models.model import Model
+from src.data.dataset import Dataset
 
 
 class SVM(Model):
@@ -9,8 +10,8 @@ class SVM(Model):
     support vector classifier
     https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html#sklearn.svm.SVC
     """
-    def __init__(self, title,  kernel, fast):
-        super().__init__(title, SVC, fast)
+    def __init__(self, title: str, dataset: Dataset, kernel: str, fast: bool):
+        super().__init__(title, SVC, dataset, fast)
         self.kernel = kernel
 
         # used for RandomizedSearchCV tuning

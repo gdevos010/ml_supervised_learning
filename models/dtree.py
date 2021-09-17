@@ -2,6 +2,7 @@ import numpy as np
 from sklearn.tree import DecisionTreeClassifier
 
 from models.model import Model
+from src.data.dataset import Dataset
 
 
 class DecisionTree(Model):
@@ -10,8 +11,8 @@ class DecisionTree(Model):
     https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html#sklearn.tree.DecisionTreeClassifier
     """
 
-    def __init__(self, name, fast):
-        super().__init__(name, DecisionTreeClassifier, fast)
+    def __init__(self, title: str, dataset: Dataset, fast: bool):
+        super().__init__(title, DecisionTreeClassifier, dataset, fast)
 
         # used for RandomizedSearchCV tuning
         self.hyper_param_distribution = dict(max_depth=np.arange(3, 25),
