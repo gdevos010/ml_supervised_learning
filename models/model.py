@@ -14,6 +14,7 @@ class Model:
         self.title = title
         self.model = model
         self.hyper_param_distribution = None
+        self.validation_curve = None
         self.fast = fast
 
         self.feature_count = dataset.feature_count

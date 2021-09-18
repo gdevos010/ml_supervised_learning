@@ -25,13 +25,12 @@ class MLP(Model):
                                                                  (10, 10, 10), (25, 15, 10), (50, 25, 10),
                                                                  (100, 50, 10)],
                                              learning_rate_init=[0.1, 0.01, 0.001],
-                                             max_iter=[1000, 5000])
+                                             max_iter=[1000, 5000],
+                                             momentum=[.25, .5, .75, .9])
 
         # used for validation curve visualization
-        self.validation_curve_param1 = 'learning_rate_init'
-        self.param1_range = np.linspace(0.001, 0.1, 10)
-        # self.validation_curve_param2 = 'max_depth'
-        # self.param2_range = range(3, 25)
+        self.validation_curve = {"learning_rate_init": np.linspace(0.001, 0.1, 10),
+                                 "momentum": np.linspace(0.1, 1., 10)}
 
         # default
         max_iter = 5 if fast else 1000

@@ -24,8 +24,7 @@ class DecisionTree(Model):
                                              min_samples_leaf=np.logspace(-4, -1, 10).tolist() + [1])
 
         # used for validation curve visualization
-        self.validation_curve_param1 = 'max_depth'
-        self.param1_range = range(3, 25)
+        self.validation_curve = {'max_depth': range(3, 25)}
         # self.validation_curve_param2 = 'max_depth'
         # self.param2_range = range(3, 25)
 

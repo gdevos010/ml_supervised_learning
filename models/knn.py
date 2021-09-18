@@ -18,14 +18,13 @@ class KNN(Model):
         else:
             super().__init__(title, KNeighborsRegressor, dataset, fast)
 
-# used for RandomizedSearchCV tuning
-        self.hyper_param_distribution = dict(n_neighbors=list(range(1, 15, 2)))
+        # used for RandomizedSearchCV tuning
+        self.hyper_param_distribution = dict(n_neighbors=list(range(1, 15, 2)),
+                                             weights=["uniform", "distance"])
 
         # used for validation curve visualization
-        self.validation_curve_param1 = 'n_neighbors'
-        self.param1_range = range(1, 15, 2)
-        # self.validation_curve_param2 = 'n_neighbors'
-        # self.param2_range = range(1, 15, 2)
+        self.validation_curve = {'n_neighbors': range(1, 15, 2),
+                                 'weights': ["uniform", "distance"]}
 
         # set default
         self.model = self.model(3, n_jobs=-1)

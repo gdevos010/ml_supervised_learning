@@ -22,14 +22,11 @@ class SVM(Model):
 
         # used for RandomizedSearchCV tuning
         self.hyper_param_distribution = {'C': np.linspace(0.1, 10, 20),
-                                         'gamma': np.logspace(-6, -1, 12),
-                                         'coef0': np.linspace(0., 2., 5)}
+                                         'gamma': np.logspace(-6, -1, 12)}
 
         # used for validation curve visualization
-        self.validation_curve_param1 = 'gamma'
-        self.param1_range = np.logspace(-6, -1, 12)
-        # self.validation_curve_param2 = 'max_depth'
-        # self.param2_range = range(3, 25)
+        self.validation_curve = {'gamma': np.logspace(-6, -1, 12),
+                                 'C': np.linspace(0.1, 10, 20)}
 
         # set default
         max_iter = 10 if fast else -1
