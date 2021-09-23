@@ -47,7 +47,7 @@ def main(name):
         # merge test and train for the purpose of this project
         input_file_train = Path.joinpath(project_dir, "data", "raw", "mitbih_train.csv")
         input_file_test = Path.joinpath(project_dir, "data", "raw", "mitbih_test.csv")
-        output_file = Path.joinpath(project_dir, "data", "processed", "mitbih.feather")
+        output_file = Path.joinpath(project_dir, "data", "processed", "MITBIH.feather")
 
         df_abnormal = pd.read_csv(input_file_train, header=None)
         df_normal = pd.read_csv(input_file_test, header=None)
