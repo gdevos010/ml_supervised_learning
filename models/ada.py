@@ -24,7 +24,7 @@ class Boosting(Model):
                                          'learning_rate': [.25, .5, .75, 1.]}
 
         # used for validation curve visualization
-        self.validation_curve = {'n_estimators': range(25, 500, 25),
+        self.validation_curve = {'n_estimators': range(25, 300, 50),
                                  'learning_rate': np.linspace(0.1, 1., 10)}
 
         # set default

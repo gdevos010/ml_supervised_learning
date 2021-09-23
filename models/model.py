@@ -1,7 +1,10 @@
+import multiprocessing
 import pickle
 import timeit
 from pathlib import Path
 
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import f1_score
 from sklearn.model_selection import RandomizedSearchCV
 
 from src.data.dataset import Dataset
@@ -17,12 +20,14 @@ class Model:
         self.validation_curve = None
         self.fast = fast
 
+        self.scoring_metric = 'f1_weighted'
+
         self.feature_count = dataset.feature_count
         self.class_num = dataset.class_num
 
         self.is_pytorch = False
 
-        self.n_iter_search = 20
+        self.n_iter_search = 10
         if self.fast:
             self.n_iter_search = 3
 
@@ -43,7 +48,9 @@ class Model:
         self.model.fit(dataset.x_train, dataset.y_train)
 
         stop = timeit.default_timer()
-        info(f'\t\ttrain time: {round(stop - start, 3)}s')
+        train_time = round(stop - start, 3)
+        info(f'\t\ttrain time: {train_time}s')
+        return train_time
 
     def score(self, dataset: Dataset, train):
         """
@@ -61,10 +68,16 @@ class Model:
             y = dataset.y_test
             mode = 'test'
 
-        score = self.model.score(x, y)
+        preds = self.model.predict(x)
         stop = timeit.default_timer()
+        valid_acc = accuracy_score(y_pred=preds, y_true=y)
+        f1 = f1_score(y_pred=preds, y_true=y, average='weighted')
+        run_time = stop - start
 
-        info(f"\t\tclassifier score {round(score, 3)} on {mode} set ({round(stop - start, 3)}s)")
+        info(f"\t\tclassifier {self.scoring_metric} score {round(f1, 3)} on {mode} set ({round(run_time, 3)}s)")
+        info(f"\t\tclassifier acc score {round(valid_acc, 3)} on {mode} set ({round(run_time, 3)}s)")
+
+        return f1, run_time
 
     def save(self, dataset_name: str):
         """
@@ -94,8 +107,12 @@ class Model:
         info(f'\ttuning: {self.title}')
         start = timeit.default_timer()
 
-        clf = RandomizedSearchCV(self.model, self.hyper_param_distribution, random_state=0,
-                                 n_iter=self.n_iter_search, n_jobs=14, verbose=verbose)
+        if self.is_pytorch:
+            n_jobs = 1
+        else:
+            n_jobs = multiprocessing.cpu_count() - 2
+        clf = RandomizedSearchCV(self.model, self.hyper_param_distribution, random_state=0, scoring=self.scoring_metric,
+                                 n_iter=self.n_iter_search, n_jobs=n_jobs, verbose=verbose)
         search = clf.fit(dataset.x_train, dataset.y_train)
 
         stop = timeit.default_timer()

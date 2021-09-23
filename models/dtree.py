@@ -21,12 +21,11 @@ class DecisionTree(Model):
 
         # used for RandomizedSearchCV tuning
         self.hyper_param_distribution = dict(max_depth=np.arange(3, 25),
-                                             min_samples_leaf=np.logspace(-4, -1, 10).tolist() + [1])
+                                             min_weight_fraction_leaf=np.linspace(0.0, .5, 5))
 
         # used for validation curve visualization
-        self.validation_curve = {'max_depth': range(3, 25)}
-        # self.validation_curve_param2 = 'max_depth'
-        # self.param2_range = range(3, 25)
+        self.validation_curve = {'max_depth': range(3, 25),
+                                 'min_weight_fraction_leaf': np.linspace(0.0, .5, 5)}
 
         # set default
         self.model = self.model(max_depth=5, criterion='gini')

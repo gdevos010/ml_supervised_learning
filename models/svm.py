@@ -19,15 +19,20 @@ class SVM(Model):
             super().__init__(title, SVC, dataset, fast)
 
         self.kernel = kernel
+        self.max_iter = 10000
+
+        gamma_range = np.linspace(0.1, 15, 10)
+        c_range = np.linspace(0.1, 100, 10)
 
         # used for RandomizedSearchCV tuning
-        self.hyper_param_distribution = {'C': np.linspace(0.1, 10, 20),
-                                         'gamma': np.logspace(-6, -1, 12)}
+        self.hyper_param_distribution = {'C': np.linspace(0.1, 15, 5),
+                                         'gamma': np.linspace(0.1, 100, 5),
+                                         'max_iter': [self.max_iter]}
 
         # used for validation curve visualization
-        self.validation_curve = {'gamma': np.logspace(-6, -1, 12),
-                                 'C': np.linspace(0.1, 10, 20)}
+        self.validation_curve = {'gamma': gamma_range,
+                                 'C': c_range}  # decreasing C corresponds to more regularization
 
         # set default
-        max_iter = 10 if fast else -1
-        self.model = self.model(kernel=kernel, max_iter=max_iter)
+        max_iter = 10 if fast else self.max_iter
+        self.model = self.model(kernel=kernel, max_iter=max_iter, cache_size=1500)
