@@ -20,7 +20,7 @@ class Model:
         self.validation_curve = None
         self.fast = fast
 
-        self.scoring_metric = 'f1_weighted'
+        self.scoring_metric = 'f1_macro'
 
         self.feature_count = dataset.feature_count
         self.class_num = dataset.class_num
@@ -76,7 +76,7 @@ class Model:
 
         # get metrics
         valid_acc = accuracy_score(y_pred=preds, y_true=y)
-        f1 = f1_score(y_pred=preds, y_true=y, average='weighted')
+        f1 = f1_score(y_pred=preds, y_true=y, average='macro')
 
         info(f"\t\tclassifier {self.scoring_metric} score {round(f1, 3)} on {mode} set ({round(run_time, 3)}s)")
         info(f"\t\tclassifier acc score {round(valid_acc, 3)} on {mode} set ({round(run_time, 3)}s)")

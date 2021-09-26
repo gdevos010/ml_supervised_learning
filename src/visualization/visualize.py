@@ -6,6 +6,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from sklearn.model_selection import ParameterGrid
 from sklearn.neural_network import MLPClassifier
+from yellowbrick.classifier import ConfusionMatrix
 from yellowbrick.model_selection import LearningCurve
 from yellowbrick.model_selection import ValidationCurve
 
@@ -133,7 +134,6 @@ def validation_curve():
 # https://www.scikit-yb.org/en/latest/api/model_selection/learning_curve.html
 def learning_curve():
     project_dir = Path(__file__).resolve().parents[2]
-    sizes = np.arange(0.3, 1., .2)
     sizes = np.linspace(0.3, 1., 6)
 
     datasets = get_datasets()
@@ -227,11 +227,50 @@ def visualize_dataset():
         plt.show()
 
 
+def gen_confusion_plot():
+    project_dir = Path(__file__).resolve().parents[2]
+
+    datasets = get_datasets()
+
+    for ds_cnt, filename in enumerate(datasets):
+        dataset = Dataset(filename)
+        info(f"dataset: {dataset.name}")
+
+        dataset.load_dataset()
+        model_list = models_from_dataset(dataset)
+
+        output_path = Path.joinpath(project_dir, "reports", "figures", dataset.name)
+        output_path.mkdir(parents=True, exist_ok=True)
+
+        # iterate over classifiers
+        for model in model_list:
+            filepath = Path.joinpath(output_path, f"{model.title} confusion matrix.png")
+            # skip if visualization already exists
+            if filepath.is_file():
+                info(f"viz exists. skipping: {filepath}")
+                continue
+
+            # Load a trained model for dataset
+            model.load(dataset.name)
+
+            if dataset.name == "EEG":
+                labels = ['eye-open', 'eye-closed']
+            if dataset.name == "mitbih":
+                labels = ['N', 'S', 'V', 'F', 'Q']
+
+            chart_title = f"Confusion Matrix for {model.title} ({dataset.name})"
+            cm = ConfusionMatrix(model.model, classes=labels, title=chart_title)
+            cm.score(dataset.x_test, dataset.y_test)
+            cm.show(outpath=filepath)
+            cm.show(clear_filename=True)
+
+
 def gen_plots():
-    visualize_dataset()
-    validation_curve()
-    learning_curve()
-    loss_curve()
+    # visualize_dataset()
+    # validation_curve()
+    # learning_curve()
+    # loss_curve()
+    gen_confusion_plot()
 
 
 if __name__ == '__main__':
