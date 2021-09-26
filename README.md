@@ -1,16 +1,17 @@
 Supervised Learning
 ==============================
+Comparing 5 supervised algorithms on two time-series medical datasets
 
-Comparing 5 supervised algorithms on two medical datasets
 
 Env installation
 ------------
-the conda environment can be created using the environment.yml
+First, install python3.8 and conda. Then create the conda environment using the environment.yml The source code can be downloaded from  https://github.com/gdevos010/ml_supervised_learning
+
 
 Run
 ------------
 to create the datasets, download the EEG and MIT-HIB dataset from the links provided under data/raw.
-run_all.py under report will train all the models, create all visualization and tables used in the report
+run_all.py under in the report dir will train all the models, create all visualization and tables used in the report
 
 
 Project Organization
