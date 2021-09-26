@@ -1,11 +1,11 @@
 from sklearn.model_selection import StratifiedShuffleSplit
 
-from models.ada import Boosting
-from models.dtree import DecisionTree
-from models.knn import KNN
-from models.nn import MLP
-from models.svm import SVM
 from src.data.dataset import Dataset
+from src.models.ada import Boosting
+from src.models.dtree import DecisionTree
+from src.models.knn import KNN
+from src.models.nn import MLP
+from src.models.svm import SVM
 from src.utils.logger import info
 # from models.tabnet import TabNet
 

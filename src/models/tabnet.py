@@ -4,8 +4,8 @@ import torch
 from pytorch_tabnet.tab_model import TabNetClassifier
 from sklearn.model_selection import train_test_split
 
-from models.model import Model
 from src.data.dataset import Dataset
+from src.models.model import Model
 from src.utils.logger import info
 
 

@@ -21,7 +21,7 @@ def train():
         dataset.load_dataset()
         model_list = models_from_dataset(dataset)
 
-        times = [["Model Type", "Train Time", "Predict Time"]]
+        times = [["Model Type", "Train Time(s)", "Predict Time(s)"]]
         # scores = [["Model Type", "F1 Train", "F1 Test"]]
 
         # iterate over models
@@ -47,7 +47,7 @@ def save_table(results, dataset: Dataset):
 
     # modify table
     table.set_fontsize(14)
-    table.scale(1, 4)
+    table.scale(1, 2)
     ax.axis('off')
 
     # display and save table
@@ -55,7 +55,7 @@ def save_table(results, dataset: Dataset):
     output_path = Path.joinpath(project_dir, "reports", "figures", dataset.name)
     output_path.mkdir(parents=True, exist_ok=True)
     filepath = Path.joinpath(output_path, "run_times.png")
-    fig.savefig(filepath)
+    fig.savefig(filepath, bbox_inches='tight')
     plt.show()
 
 

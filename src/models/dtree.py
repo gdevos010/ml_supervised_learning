@@ -2,8 +2,8 @@ import numpy as np
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.tree import DecisionTreeRegressor
 
-from models.model import Model
 from src.data.dataset import Dataset
+from src.models.model import Model
 
 
 class DecisionTree(Model):
@@ -28,4 +28,4 @@ class DecisionTree(Model):
                                  'min_weight_fraction_leaf': np.linspace(0.0, .5, 5)}
 
         # set default
-        self.model = self.model(max_depth=5, criterion='gini')
+        self.model = self.model(max_depth=20, criterion='gini')

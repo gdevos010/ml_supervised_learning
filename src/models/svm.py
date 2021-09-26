@@ -1,8 +1,8 @@
 import numpy as np
 from sklearn.svm import SVC
 
-from models.model import Model
 from src.data.dataset import Dataset
+from src.models.model import Model
 
 
 class SVM(Model):
@@ -21,8 +21,8 @@ class SVM(Model):
         self.kernel = kernel
         self.max_iter = 10000
 
-        gamma_range = np.linspace(0.1, 15, 10)
-        c_range = np.linspace(0.1, 100, 10)
+        gamma_range = np.linspace(0.01, 10, 5)
+        c_range = np.linspace(0.01, 10, 5)
 
         # used for RandomizedSearchCV tuning
         self.hyper_param_distribution = {'C': np.linspace(0.1, 15, 5),
@@ -35,4 +35,4 @@ class SVM(Model):
 
         # set default
         max_iter = 10 if fast else self.max_iter
-        self.model = self.model(kernel=kernel, max_iter=max_iter, cache_size=1500)
+        self.model = self.model(kernel=kernel, max_iter=max_iter, cache_size=1500, gamma=.1, C=3.825)

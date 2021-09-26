@@ -1,8 +1,8 @@
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.neighbors import KNeighborsRegressor
 
-from models.model import Model
 from src.data.dataset import Dataset
+from src.models.model import Model
 
 
 class KNN(Model):
@@ -28,4 +28,4 @@ class KNN(Model):
         self.validation_curve = {'n_neighbors': range(1, 15, 2)}
 
         # set default
-        self.model = self.model(3, weights=weights, n_jobs=-1)
+        self.model = self.model(n_neighbors=3, weights=weights, n_jobs=-1)

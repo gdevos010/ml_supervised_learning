@@ -2,8 +2,8 @@ import numpy as np
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.ensemble import AdaBoostRegressor
 
-from models.model import Model
 from src.data.dataset import Dataset
+from src.models.model import Model
 
 
 class Boosting(Model):
@@ -20,12 +20,12 @@ class Boosting(Model):
             super().__init__(title, AdaBoostRegressor, dataset, fast)
 
         # used for RandomizedSearchCV tuning
-        self.hyper_param_distribution = {'n_estimators': [10, 50, 100, 200],
-                                         'learning_rate': [.25, .5, .75, 1.]}
+        self.hyper_param_distribution = {'n_estimators': [10, 50, 100, 200, 500, 1000],
+                                         'learning_rate': np.linspace(0.1, 1., 10)}
 
         # used for validation curve visualization
-        self.validation_curve = {'n_estimators': range(25, 300, 50),
+        self.validation_curve = {'n_estimators': range(25, 550, 100),
                                  'learning_rate': np.linspace(0.1, 1., 10)}
 
         # set default
-        self.model = self.model()
+        self.model = self.model(n_estimators=500, learning_rate=.5)

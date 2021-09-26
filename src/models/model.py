@@ -1,4 +1,4 @@
-import multiprocessing
+import multiprocessing as mp
 import pickle
 import timeit
 from pathlib import Path
@@ -69,10 +69,14 @@ class Model:
             mode = 'test'
 
         preds = self.model.predict(x)
+
+        # get run time
         stop = timeit.default_timer()
+        run_time = stop - start
+
+        # get metrics
         valid_acc = accuracy_score(y_pred=preds, y_true=y)
         f1 = f1_score(y_pred=preds, y_true=y, average='weighted')
-        run_time = stop - start
 
         info(f"\t\tclassifier {self.scoring_metric} score {round(f1, 3)} on {mode} set ({round(run_time, 3)}s)")
         info(f"\t\tclassifier acc score {round(valid_acc, 3)} on {mode} set ({round(run_time, 3)}s)")
@@ -84,7 +88,7 @@ class Model:
         save model under models/zoo
         """
         project_dir = Path(__file__).resolve().parents[1]
-        filepath = Path.joinpath(project_dir, "models", "zoo", dataset_name)
+        filepath = Path.joinpath(project_dir, "models", "../../models/zoo", dataset_name)
         filepath.mkdir(parents=True, exist_ok=True)
         filepath = Path.joinpath(filepath, self.title + ".pkl")
 
@@ -96,7 +100,7 @@ class Model:
         """
         info(f"\tloading: {self.title}")
         project_dir = Path(__file__).resolve().parents[1]
-        filepath = Path.joinpath(project_dir, "models", "zoo", dataset_name,  self.title + ".pkl")
+        filepath = Path.joinpath(project_dir, "models", "../../models/zoo", dataset_name, self.title + ".pkl")
         self.model = pickle.load(open(filepath, 'rb'))
 
     def tune(self, dataset: Dataset, verbose=0):
@@ -110,7 +114,7 @@ class Model:
         if self.is_pytorch:
             n_jobs = 1
         else:
-            n_jobs = multiprocessing.cpu_count() - 2
+            n_jobs = mp.cpu_count() - 2
         clf = RandomizedSearchCV(self.model, self.hyper_param_distribution, random_state=0, scoring=self.scoring_metric,
                                  n_iter=self.n_iter_search, n_jobs=n_jobs, verbose=verbose)
         search = clf.fit(dataset.x_train, dataset.y_train)

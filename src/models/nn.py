@@ -1,9 +1,8 @@
-import numpy as np
 from sklearn.neural_network import MLPClassifier
 from sklearn.neural_network import MLPRegressor
 
-from models.model import Model
 from src.data.dataset import Dataset
+from src.models.model import Model
 
 
 class MLP(Model):
@@ -30,11 +29,15 @@ class MLP(Model):
 
         # used for validation curve visualization
         self.validation_curve = {"learning_rate_init": [0.001, 0.005, 0.01, 0.05, 0.1],
-                                 "momentum": np.linspace(0.1, 1., 10),
+                                 # "momentum": np.linspace(0.1, 1., 10),
                                  "alpha": [0.0001, 0.0005, 0.001, 0.005, 0.01, 0.05]}
 
         # default
-        max_iter = 5 if fast else 10000
-        hidden_layer_sizes = (10, 10) if fast else (100, 100)
-        self.model = self.model(max_iter=max_iter, hidden_layer_sizes=hidden_layer_sizes,
-                                early_stopping=True, n_iter_no_change=15)
+        self.max_iter = 5 if fast else 10000
+        hidden_layer_sizes = (10, 10) if fast else (50, 25, 10)
+        self.model = self.model(max_iter=self.max_iter,
+                                momentum=.75,
+                                learning_rate_init=0.01,
+                                hidden_layer_sizes=hidden_layer_sizes,
+                                early_stopping=True,
+                                n_iter_no_change=15)
