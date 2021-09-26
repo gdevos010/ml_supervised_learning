@@ -3,18 +3,15 @@ Supervised Learning
 
 Comparing 5 supervised algorithms on two medical datasets
 
+Env installation
+------------
+the conda environment can be created using the environment.yml
 
-TODO
-------
-- cross validation
-- why is the values/features in the dataset interesting
-- graph with the relationship between training size and test size 0-100%
-- for nn epoch graph, loss curve
-- hyper parameter values (grid search)
-- the validation and complexity curve (2 for each algorithm)
-  - high bais low variance or low bais high variance
-- justification of performance metric
-- move model code to src dir
+Run
+------------
+to create the datasets, download the EEG and MIT-HIB dataset from the links provided under data/raw.
+run_all.py under report will train all the models, create all visualization and tables used in the report
+
 
 Project Organization
 ------------
