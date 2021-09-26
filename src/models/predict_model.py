@@ -17,7 +17,7 @@ def predict():
         dataset.load_dataset()
         model_list = models_from_dataset(dataset)
 
-        scores = [["Model Type", "F1 Score", "Predict Time"]]
+        scores = [["Model Type", "F1 Score"]]
 
         # iterate over models
         for model in model_list:
@@ -25,7 +25,7 @@ def predict():
             model.load(dataset.name)
 
             f1, run_time = model.score(dataset, train=False)
-            scores.append([model.title, round(f1, 3), str(round(run_time, 3)) + 's'])
+            scores.append([model.title, round(f1, 3)])
 
         save_table(scores, dataset)
 
@@ -36,7 +36,7 @@ def save_table(results, dataset: Dataset):
 
     # modify table
     table.set_fontsize(14)
-    table.scale(1, 4)
+    table.scale(1, 2)
     ax.axis('off')
 
     # display and save table
@@ -44,7 +44,7 @@ def save_table(results, dataset: Dataset):
     output_path = Path.joinpath(project_dir, "reports", "figures", dataset.name)
     output_path.mkdir(parents=True, exist_ok=True)
     filepath = Path.joinpath(output_path, "test_results.png")
-    fig.savefig(filepath)
+    fig.savefig(filepath, bbox_inches='tight')
     plt.show()
 
 

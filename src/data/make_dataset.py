@@ -11,9 +11,7 @@ from src.utils.logger import info
 from src.utils.logger import init_logger
 
 
-@click.command()
-@click.argument("name")
-def main(name):
+def make_dataset(name):
     """Runs data processing scripts to turn raw data from (../raw) into
     cleaned data ready to be analyzed (saved in ../processed).
     """
@@ -56,6 +54,12 @@ def main(name):
         feather.write_dataframe(df, str(output_file))
 
 
+@click.command()
+@click.argument("name")
+def make(name):
+    make_dataset(name)
+
+
 if __name__ == "__main__":
     init_logger()
 
@@ -63,4 +67,4 @@ if __name__ == "__main__":
     # load up the .env entries as environment variables
     load_dotenv(find_dotenv())
 
-    main()
+    make()
