@@ -1,6 +1,9 @@
 Supervised Learning
 ==============================
-Comparing 5 supervised algorithms on two time-series medical datasets
+This is a Machine Learning  project in OMSCS program. The goal was to compare 5 supervised algorithms on two time-series medical datasets. The five algorithms included, decision trees, boosting, k nearest neighbor, support vector machines, and nueral networks. The full anaylsis can be viewed under the reports directory.
+
+
+I added my own personal goals to learning git pre-commit hooks and the cookiecutter-data-science repo. 
 
 
 Env installation
